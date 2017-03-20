@@ -61,24 +61,24 @@ treeMenu.prototype={
         			if(a[i].tc_url == "")
 						html += "<li class=\"treeview\" menuId=\""+a[i].id+"\"><a href=\"javascript:void(0)\"><i class=\"fa fa-cog\"></i><span>"+a[i].tc_name+"</span><span class=\"pull-right-container\"><i class=\"fa fa-angle-left pull-right\"></i></span></a>";
 					else
-						html += "<li class=\"treeview\" menuId=\""+a[i].id+"\"><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_sys_permit_id+"\"><i class=\"fa fa-cog\"></i><span>"+a[i].tc_name+"</span><span class=\"pull-right-container\"><i class=\"fa fa-angle-left pull-right\"></i></span></a>";
+						html += "<li class=\"treeview\" menuId=\""+a[i].id+"\"><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_permit_id+"\"><i class=\"fa fa-cog\"></i><span>"+a[i].tc_name+"</span><span class=\"pull-right-container\"><i class=\"fa fa-angle-left pull-right\"></i></span></a>";
         		}else{// 非1级菜单
         			if(a[i].tc_url == "")
 						html += "<li class=\"treeview\" menuId=\""+a[i].id+"\"><a href=\"javascript:void(0)\"><i class=\"fa fa-circle-o\"></i><span>"+a[i].tc_name+"</span><span class=\"pull-right-container\"><i class=\"fa fa-angle-left pull-right\"></i></span></a>";
 					else
-						html += "<li class=\"treeview\" menuId=\""+a[i].id+"\"><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_sys_permit_id+"\"><i class=\"fa fa-circle-o\"></i><span>"+a[i].tc_name+"</span><span class=\"pull-right-container\"><i class=\"fa fa-angle-left pull-right\"></i></span></a>";
+						html += "<li class=\"treeview\" menuId=\""+a[i].id+"\"><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_permit_id+"\"><i class=\"fa fa-circle-o\"></i><span>"+a[i].tc_name+"</span><span class=\"pull-right-container\"><i class=\"fa fa-angle-left pull-right\"></i></span></a>";
         		}
         	}else{// 没有子节点
         		if(a[i].pid == 0){// 1级菜单
         			if(a[i].tc_url == "")
         				html += "<li menuId=\""+a[i].id+"\"><a href=\"javascript:void(0)\"><i class=\"fa fa-list\"></i><span>"+a[i].tc_name+"</span></a>";
        				else
-        				html += "<li menuId=\""+a[i].id+"\"\><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_sys_permit_id+"\"><i class=\"fa fa-list\"></i><span>"+a[i].tc_name+"</span></a>";
+        				html += "<li menuId=\""+a[i].id+"\"\><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_permit_id+"\"><i class=\"fa fa-list\"></i><span>"+a[i].tc_name+"</span></a>";
         		}else{ // 非1级菜单
         			if(a[i].tc_url == "")
         				html += "<li menuId=\""+a[i].id+"\"><a href=\"javascript:void(0)\"><i class=\"fa fa-circle-o\"></i><span>"+a[i].tc_name+"</span></a>";
        				else
-        				html += "<li menuId=\""+a[i].id+"\"><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_sys_permit_id+"\"><i class=\"fa fa-circle-o\"></i><span>"+a[i].tc_name+"</span></a>";
+        				html += "<li menuId=\""+a[i].id+"\"><a href=\""+$ctx+""+a[i].tc_url+"?menuId="+a[i].id+"&menuName="+a[i].tc_name+"&menuPermitId="+a[i].tc_permit_id+"\"><i class=\"fa fa-circle-o\"></i><span>"+a[i].tc_name+"</span></a>";
         		}
         	}
             html += this.getDom(a[i].id,this.groups[a[i].id]);
