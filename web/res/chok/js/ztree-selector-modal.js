@@ -48,17 +48,18 @@
 								"<ul id=\""+config.treeid+"\" class=\"ztree\"></ul>" +
 							"</div>" +
 							"<div class=\"modal-footer\">" +
-								"<button type=\"button\" class=\"btn btn-default\" id=\""+this.attr("id")+"_btn_cancel\" data-dismiss=\"modal\"><i class=\"glyphicon glyphicon-remove\"></i></button>" +
+								"<button type=\"button\" class=\"btn btn-default\" id=\""+this.attr("id")+"_btn_refresh\"><i class=\"glyphicon glyphicon-refresh\"></i></button>" +
 								"<button type=\"button\" class=\"btn btn-primary\" id=\""+this.attr("id")+"_btn_ok\"><i class=\"glyphicon glyphicon-ok\"></i></button>" + 
 							"</div>"+
 						"</div>"+
 					"</div>");
-    	// 初始化树
-    	var setting = $.extend({}, default_tree_setting, config.setting);
-    	$.fn.zTree.init($("#"+config.treeid), setting);
+    	// 每次弹窗重新初始化树
+    	$(this).on('shown.bs.modal', function () {
+        	var setting = $.extend({}, default_tree_setting, config.setting);
+        	$.fn.zTree.init($("#"+config.treeid), setting);
+		});
     	// 全部展开/折叠
         $("#"+this.attr("id")+"_ckb_expandAll").click(function(){
-        	var zTree = $.fn.zTree.getZTreeObj(config.treeid);
             if($(this).prop("checked")==true){
             	zTree.expandAll(true);
             }else{
@@ -70,6 +71,11 @@
     	$("#"+this.attr("id")+"_btn_ok").click(function(){
     		config.callback.onConfirm(_this, returnValue(config.treeid));
     		_this.modal("hide");
+    	});
+    	// refresh按钮回调
+    	$("#"+this.attr("id")+"_btn_refresh").click(function(){
+    		var zTree = $.fn.zTree.getZTreeObj(config.treeid);
+    		zTree.reAsyncChildNodes(null, "refresh");
     	});
 		return this;
     };
