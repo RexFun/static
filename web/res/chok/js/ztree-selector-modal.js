@@ -60,6 +60,7 @@
 		});
     	// 全部展开/折叠
         $("#"+this.attr("id")+"_ckb_expandAll").click(function(){
+        	var zTree = $.fn.zTree.getZTreeObj(config.treeid);
             if($(this).prop("checked")==true){
             	zTree.expandAll(true);
             }else{
@@ -90,7 +91,7 @@
 			var tNode = nodes[i];
 			var pNodeTcName = pNode?pNode.tc_name:"";
 			var tNodeTcName = tNode.tc_name;
-			v_name += pNodeTcName+"-"+tNodeTcName+ ",";
+			v_name += pNodeTcName+" > "+tNodeTcName+ ",";
 			v_id = tNode.id;
 		}
 		if (v_name.length > 0 ) v_name = v_name.substring(0, v_name.length-1);
