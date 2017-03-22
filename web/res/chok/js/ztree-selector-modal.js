@@ -90,7 +90,7 @@
 			var pNode = nodes[i].getParentNode();
 			var tNode = nodes[i];
 			var pNodeTcName = pNode?pNode.tc_name:"";
-			var tNodeTcName = tNode.tc_name;
+			var tNodeTcName = tNode.tc_name+"["+tNode.id+"]";
 			v_name += pNodeTcName+" > "+tNodeTcName+ ",";
 			v_id = tNode.id;
 		}
