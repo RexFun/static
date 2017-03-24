@@ -57,8 +57,8 @@ $chok.view.get.callback.onPageChange = function(number,size){
 $chok.view.get.callback.onLoadSuccess = function(){
 };
 //加载失败回调
-$chok.view.get.callback.onLoadError = function(){
-	ajaxOnLoadError();
+$chok.view.get.callback.onLoadError = function(status){
+	ajaxOnLoadError(status);
 };
 
 /* **************************************************************************************************************
@@ -88,9 +88,10 @@ $chok.view.get.init.toolbar = function(){
 			return;
 		}
 		if(!confirm("确认删除？")) return;
-		$.post("del.action",{id:$chok.view.get.fn.getIdSelections()},function(data){
+		$.post("del.action",{id:$chok.view.get.fn.getIdSelections()},function(result){
+	        $chok.view.get.callback.delRows(result); // 删除行回调
+	        if(!result.success) return;
 	        $("#tb_list").bootstrapTable('refresh'); // 刷新table
-	        $chok.view.get.callback.delRows(); // 删除行回调
 		});
 	});
 };
@@ -112,7 +113,7 @@ $chok.view.get.init.table = function(pageNum, pageSize){
         showExport:true,
 		striped:true,
 		pagination:true,
-		pageList:"[5,10,20]",
+		pageList:"[5,10,20,50,100]",
 		pageNumber:$chok.view.get.config.curPageNum,
 		pageSize:$chok.view.get.config.curPageSize,
 	    queryParams:$chok.view.get.config.formParams,
