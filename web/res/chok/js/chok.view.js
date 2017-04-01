@@ -1,5 +1,6 @@
 $chok.view = {};
 $chok.view.menuId = 0;
+$chok.view.menuPermitId = 0;
 $chok.view.menuName = "首页";
 $chok.view.fn = {};
 //获取url表单参数字符串
@@ -17,8 +18,9 @@ $chok.view.fn.getUrlParams = function(queryParams){
 	return paramsStr;
 };
 // 选中侧栏菜单
-$chok.view.fn.selectSidebarMenu = function(menuId,menuName){
+$chok.view.fn.selectSidebarMenu = function(menuId,menuPermitId,menuName){
 	$chok.view.menuId = menuId;
+	$chok.view.menuPermitId = menuPermitId;
 	$chok.view.menuName = menuName;
 	// set current menu
 	$(".sidebar-menu li").each(function(){

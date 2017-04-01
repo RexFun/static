@@ -150,10 +150,11 @@ $chok.view.get.fn.getColumns = function(){
 // 获取url表单参数字符串
 $chok.view.get.fn.getUrlParams = function(){
 	var params = $chok.view.get.config.urlParams();
-	params = $.extend(params, {menuId	  : $chok.view.menuId,
-							   menuName	  : $chok.view.menuName,
-							   f_page     : $chok.view.get.config.curPageNum,
-							   f_pageSize : $chok.view.get.config.curPageSize});
+	params = $.extend(params, {menuId	    : $chok.view.menuId,
+							   menuPermitId : $chok.view.menuPermitId,
+							   menuName	    : $chok.view.menuName,
+							   f_page       : $chok.view.get.config.curPageNum,
+							   f_pageSize   : $chok.view.get.config.curPageSize});
 	var paramsStr = "";
 	$.map(params, function(value, key){
 		paramsStr += key+"="+value+"&";
