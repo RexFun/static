@@ -59,7 +59,33 @@ $chok.view.get.callback.onLoadSuccess = function(){
 //加载失败回调
 $chok.view.get.callback.onLoadError = function(status){
 };
-
+//编辑单元格后回调
+$chok.view.get.callback.onEditableSave = function(field, row, oldValue, $el){
+	var key = field.split(".")[1];
+	row.m[key] = row[field];
+    $.ajax({
+        type: "post",
+        url: "upd2.action",
+        data: row,
+        dataType: 'JSON',
+        success: function (data, status) {
+            if (status=="success") {
+                alert($chok.checkResult(data));
+                $("#tb_list").bootstrapTable('refresh'); // 刷新table
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            /*弹出jqXHR对象的信息*/
+            alert($chok.checkResult(jqXHR.responseText));
+//            alert(jqXHR.status);
+//            alert(jqXHR.readyState);
+//            alert(jqXHR.statusText);
+            /*弹出其他两个参数的信息*/
+//            alert(textStatus);
+//            alert(errorThrown);
+        }
+    });
+};
 /* **************************************************************************************************************
  * init
  * */
@@ -139,44 +165,14 @@ $chok.view.get.init.table = function(pageNum, pageSize){
 	    columns:thisColumns,
 	    onPageChange:$chok.view.get.callback.onPageChange,
 	    onLoadSuccess:$chok.view.get.callback.onLoadSuccess,
-	    onLoadError:$chok.view.get.callback.onLoadError
+	    onLoadError:$chok.view.get.callback.onLoadError,
+        onEditableSave:$chok.view.get.callback.onEditableSave
 	});
 	//随窗口resize 改变 高度
 	$(window).resize(function () {
 		$('#tb_list').bootstrapTable('resetView', {height: getGlobalHeight("table")});
 	});
 };
-//$chok.view.get.init.table = function(pageNum, pageSize){
-//	if(pageNum != null && pageNum != "") {$chok.view.get.config.curPageNum = parseInt(pageNum);}
-//	if(pageSize != null && pageSize != "") {$chok.view.get.config.curPageSize = parseInt(pageSize);}
-//	var thisColumns = $chok.view.get.fn.getColumns();
-//	$('#tb_list').bootstrapTable({
-//		height:getGlobalHeight("table"),
-//		method:'post',
-//		contentType:"application/x-www-form-urlencoded",//用post，必须采用此参数
-//		url: 'getJson.action',
-//		sidePagination:"server",
-//		toolbar:"#toolbar",
-//		showRefresh:true,
-//		showToggle:true,
-//		showColumns:true,
-//		showExport:true,
-//		striped:true,
-//		pagination:true,
-//		pageList:"[5,10,20,50,100]",
-//		pageNumber:$chok.view.get.config.curPageNum,
-//		pageSize:$chok.view.get.config.curPageSize,
-//		queryParams:$chok.view.get.config.formParams,
-//		columns:thisColumns,
-//		onPageChange:$chok.view.get.callback.onPageChange,
-//		onLoadSuccess:$chok.view.get.callback.onLoadSuccess,
-//		onLoadError:$chok.view.get.callback.onLoadError
-//	});
-//	//随窗口resize 改变 高度
-//	$(window).resize(function () {
-//		$('#tb_list').bootstrapTable('resetView', {height: getGlobalHeight("table")});
-//	});
-//};
 
 /* **************************************************************************************************************
  * fn

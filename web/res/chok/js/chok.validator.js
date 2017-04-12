@@ -80,6 +80,16 @@ $chok.validator = {
 	},
 	/**
 	 * fn
+	 * 获取提示
+	 */
+	getMsg:function(ruleName, attrValue, cusMsg){
+		var msg = $chok.validator.rules.msgs[ruleName];
+		if(typeof(cusMsg)!="undefined" && cusMsg!=null) msg = cusMsg;
+		if(typeof(attrValue)!="undefined" && attrValue!=null) msg = msg.replace("{0}", attrValue);
+		return msg;
+	},
+	/**
+	 * fn
 	 * 移除提示
 	 */
 	removeMsg:function($e){
@@ -153,5 +163,18 @@ $chok.validator = {
 		});
 		if(a.indexOf(false)!=-1) v=false;
 		return v;
+	},
+
+	/**
+	 * fn
+	 * 执行验证单元格
+	 */
+	checkEditable:function(ruleName, attrValue, inputValue, cusMsg){
+		if(ruleName=='required' || ruleName=='number' || ruleName=='integer' || ruleName=='email' || ruleName=='idno' || ruleName=='url'){
+			if(!$chok.validator.rules.fn[ruleName](inputValue)) return $chok.validator.getMsg(ruleName, null, cusMsg);
+		}else if(ruleName=='minLength' || ruleName=='maxLength'){
+			if(!$chok.validator.rules.fn[ruleName](inputValue, attrValue)) return $chok.validator.getMsg(ruleName, attrValue, cusMsg);
+		}
+		return '';
 	}
 };
