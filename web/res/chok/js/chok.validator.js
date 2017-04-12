@@ -82,10 +82,10 @@ $chok.validator = {
 	 * fn
 	 * 获取提示
 	 */
-	getMsg:function(ruleName, attrValue, cusMsg){
+	getMsg:function(ruleName, ruleValue, cusMsg){
 		var msg = $chok.validator.rules.msgs[ruleName];
 		if(typeof(cusMsg)!="undefined" && cusMsg!=null) msg = cusMsg;
-		if(typeof(attrValue)!="undefined" && attrValue!=null) msg = msg.replace("{0}", attrValue);
+		if(typeof(ruleValue)!="undefined" && ruleValue!=null) msg = msg.replace("{0}", ruleValue);
 		return msg;
 	},
 	/**
@@ -136,8 +136,8 @@ $chok.validator = {
 			if(typeof($(this).attr("validate-rule-minLength"))!="undefined" && $(this).val().length>0){
 				var ruleName = "minLength";
 				var inputValue = $(this).val();
-				var attrValue = $(this).attr("validate-rule-minLength");
-				if(!$chok.validator.rules.fn[ruleName](inputValue, attrValue)){
+				var ruleValue = $(this).attr("validate-rule-minLength");
+				if(!$chok.validator.rules.fn[ruleName](inputValue, ruleValue)){
 					$chok.validator.addMsg(ruleName,$(this));
 					a[i] = false;
 					return;
@@ -150,8 +150,8 @@ $chok.validator = {
 			if(typeof($(this).attr("validate-rule-maxLength"))!="undefined" && $(this).val().length>0){
 				var ruleName = "maxLength";
 				var inputValue = $(this).val();
-				var attrValue = $(this).attr("validate-rule-maxLength");
-				if(!$chok.validator.rules.fn[ruleName](inputValue, attrValue)){
+				var ruleValue = $(this).attr("validate-rule-maxLength");
+				if(!$chok.validator.rules.fn[ruleName](inputValue, ruleValue)){
 					$chok.validator.addMsg(ruleName,$(this));
 					a[i] = false;
 					return;
@@ -169,11 +169,11 @@ $chok.validator = {
 	 * fn
 	 * 执行验证单元格
 	 */
-	checkEditable:function(ruleName, attrValue, inputValue, cusMsg){
+	checkEditable:function(ruleName, ruleValue, inputValue, cusMsg){
 		if(ruleName=='required' || ruleName=='number' || ruleName=='integer' || ruleName=='email' || ruleName=='idno' || ruleName=='url'){
 			if(!$chok.validator.rules.fn[ruleName](inputValue)) return $chok.validator.getMsg(ruleName, null, cusMsg);
 		}else if(ruleName=='minLength' || ruleName=='maxLength'){
-			if(!$chok.validator.rules.fn[ruleName](inputValue, attrValue)) return $chok.validator.getMsg(ruleName, attrValue, cusMsg);
+			if(!$chok.validator.rules.fn[ruleName](inputValue, ruleValue)) return $chok.validator.getMsg(ruleName, ruleValue, cusMsg);
 		}
 		return '';
 	}
