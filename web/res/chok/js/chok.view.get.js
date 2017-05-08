@@ -8,38 +8,16 @@ $chok.view.get.config.curPageSize = 10;//配置每页行数
 $chok.view.get.config.setPreFormParams = function(){};//保留上次表单参数
 $chok.view.get.config.formParams = function(p){return p;};//配置表单参数
 $chok.view.get.config.urlParams = function(){return {};};//配置url表单参数
-$chok.view.get.config.tableColumns = [];//配置表格列
-//配置行菜单
+$chok.view.get.config.tableColumns = [];//配置表格列//配置行菜单
 $chok.view.get.config.operateFormatter = function(value, row, index){
-	var url_upd1 = "upd1.action?id="+row.m.id+"&"+$chok.view.get.fn.getUrlParams();
-	var url_getById = "getById.action?id="+row.m.id+"&"+$chok.view.get.fn.getUrlParams();
-    return ['<div class="btn-group">',
-	    	'<button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown">',
-	    	'<span class="caret"></span>',
-	    	'</button>',
-	    	'<ul class="dropdown-menu" role="menu">',
-	    	'<li class="upd" pbtnId="pbtn_upd'+index+'">',
-	    	'<a href="'+url_upd1+'">',
-	        '<i class="glyphicon glyphicon-edit"></i>',
-	    	'</a>',
-	    	'</li>',
-	    	'<li class="getById" pbtnId="pbtn_getById'+index+'">',
-	    	'<a href="'+url_getById+'">',
-	        '<i class="glyphicon glyphicon-info-sign"></i>',
-	    	'</a>',
-	    	'</li>',
-	    	'</ul>',
-	    	'</div>'
+    return [
+	        "<div class='btn-group btn-group-xs'>",
+	        "<button type='button' class='btn btn-default dropdown-toggle tb_ctx_menu_btn' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>",
+	        "<span class='caret'></span>",
+	        "<span class='sr-only'>Toggle Dropdown</span>",
+	        "</button>",
+	        "</div>"
 		    ].join('');
-};
-//配置行菜单事件
-$chok.view.get.config.operateEvents = {
-    'click .upd': function (e, value, row, index) {
-//		location.href = "upd1.action?id="+row.m.id+"&"+$chok.view.get.fn.getUrlParams();
-    },
-    'click .getById': function (e, value, row, index) {
-//		location.href = "getById.action?id="+row.m.id+"&"+$chok.view.get.fn.getUrlParams();
-    }
 };
 /* *
  * callback
@@ -85,6 +63,14 @@ $chok.view.get.callback.onEditableSave = function(field, row, oldValue, $el){
 //            alert(errorThrown);
         }
     });
+};
+//右键菜单点击事件 
+$chok.view.get.callback.onContextMenuItem = function(row, $el){
+	if ($el.data("item")=="upd"){
+		location.href = "upd1.action?id="+row.m.id+"&"+$chok.view.get.fn.getUrlParams();
+	} else if ($el.data("item")=="getById"){
+		location.href = "getById.action?id="+row.m.id+"&"+$chok.view.get.fn.getUrlParams();
+	}
 };
 /* **************************************************************************************************************
  * init
@@ -148,6 +134,8 @@ $chok.view.get.init.table = function(pageNum, pageSize){
 	var thisColumns = $chok.view.get.fn.getColumns();
 	$('#tb_list').bootstrapTable({
 		height:getGlobalHeight("table"),
+		contextMenu:"#tb_ctx_menu",
+		contextMenuButton: '.tb_ctx_menu_btn',
 		contentType:"application/x-www-form-urlencoded",//用post，必须采用此参数
 		ajax : "ajaxRequest",//自定义ajax
 		sidePagination:"server",
@@ -166,7 +154,8 @@ $chok.view.get.init.table = function(pageNum, pageSize){
 	    onPageChange:$chok.view.get.callback.onPageChange,
 	    onLoadSuccess:$chok.view.get.callback.onLoadSuccess,
 	    onLoadError:$chok.view.get.callback.onLoadError,
-        onEditableSave:$chok.view.get.callback.onEditableSave
+        onEditableSave:$chok.view.get.callback.onEditableSave,
+        onContextMenuItem:$chok.view.get.callback.onContextMenuItem
 	});
 	//随窗口resize 改变 高度
 	$(window).resize(function () {
@@ -190,7 +179,7 @@ $chok.view.get.fn.getColumns = function(){
 		[
 	     {checkbox:true, align:'center', valign:'middle'},
 	     {title:'操作', field:'operate', align:'center', valign:'middle', width:'50', events:$chok.view.get.config.operateEvents, formatter:$chok.view.get.config.operateFormatter}
-	    ];
+		];
 	return $.merge(columns,$chok.view.get.config.tableColumns);
 };
 // 获取url表单参数字符串
