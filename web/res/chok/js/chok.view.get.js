@@ -161,6 +161,10 @@ $chok.view.get.init.table = function(pageNum, pageSize){
 	$(window).resize(function () {
 		$('#tb_list').bootstrapTable('resetView', {height: getGlobalHeight("table")});
 	});
+	//随导航菜单resize 改变 宽度
+	$("section[class='content']").resize(function(){
+		$('#tb_list').bootstrapTable('resetView');
+	});
 };
 
 /* **************************************************************************************************************
