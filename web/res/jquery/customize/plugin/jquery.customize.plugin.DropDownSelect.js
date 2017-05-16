@@ -1,18 +1,22 @@
 (function($){
     /* 下拉选择框 */
-    $.fn.cascadeSelect = function(cfg){
+    $.fn.DropDownSelect = function(cfg){
     	// 默认设置
     	var def = {
-    	    data:[],    // 全数据
-    	    newdata:[], // 新数据
+    	    url:null,
     	    fk:null,
     	    cascadeid:null,
     		k:"name",
-    		v:"id"
+    		v:"id",
+    		callback:{
+    			afterload:function(){}
+    		}
         };  
         var opt = $.extend(def,cfg); 
         // 获取当前对象
     	$el = $(this);
+    	// 首次加载
+    	reload($el, opt, null);
     	// 获取级联元素id
     	var _cascadeid = $el.attr("cascadeid");
     	if (typeof(_cascadeid)!="undefined") opt.cascadeid = _cascadeid;
@@ -22,9 +26,6 @@
     			var pk = $(this).val();
     	    	reload($el, opt, pk);
     		});
-    	} else {
-    		alert("Plugin [cascadeSelect] attr 'cascadeid' not allow null!");
-    		return false;
     	}
     	// 监听表单reset事件，reload下拉列表为默认值
     	$("button[type='reset']").on('click', function() {
@@ -37,20 +38,25 @@
     /**
      * 重新加载
      */ 
-    function reload($el, opt, pk){
-    	var data = opt.data;
-    	opt.newdata = [];
-    	if (pk!=null && pk!="") {
-	    	for(var i=0; i<data.length; i++){
-	    		if(data[i][opt.fk]==pk) opt.newdata.push(data[i]);
-	    	}
-    	} else {
-    		opt.newdata = data;
-    	}
-    	$el.empty();
-    	$el.append("<option value=\"\">请选择</option>");
-    	for(var j=0; j<opt.newdata.length; j++){
-    		$el.append("<option value=\""+opt.newdata[j][opt.v]+"\">"+opt.newdata[j][opt.k]+"</option>");
-    	}
+    function reload($el, opt, pk) {
+    	var param = {};
+    	if(opt.fk!=null) param[opt.fk] = pk;
+    	
+    	$.ajax({
+    		url: opt.url,
+    		data:param,
+    		success: function(result,status,xhr) {
+    			console.info(result);
+    	    	$el.empty();
+    	    	$el.append("<option value=\"\">请选择</option>");
+    	    	for(var i=0; i<result.length; i++){
+    	    		$el.append("<option value=\""+result[i][opt.v]+"\">"+result[i][opt.k]+"</option>");
+    	    	}
+    	    	// 调用回调函数
+    	    	opt.callback.afterload();
+    		},
+    		error: function(xhr,status,error) {
+    		}
+    	});
     }
 })(jQuery);

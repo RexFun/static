@@ -34,7 +34,7 @@
 		}
 	};
     /* 树形选择弹窗 */
-    $.fn.ztreeSelectorModal=function(config){
+    $.fn.ZtreeSelectModal=function(config){
     	this.addClass("modal fade");
     	this.attr({"tabindex":"-1", "role":"dialog", "aria-labelledby":"modal_label", "aria-hidden":"true"});
     	this.append("<div class=\"modal-dialog\">" +
