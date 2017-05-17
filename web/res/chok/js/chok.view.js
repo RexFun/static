@@ -38,4 +38,7 @@ $chok.view.fn.selectSidebarMenu = function(menuId,menuPermitId,menuName){
 //	$(".content-header h1").html(menuName);
 	// set right title
 //	$(".content-header ol li[class='active']").html(menuName);
+	$chok.view.fn.customize();
 };
+// 用户自定义
+$chok.view.fn.customize = function(){};
