@@ -101,7 +101,10 @@ $chok.view.get.init.toolbar = function(){
 		if(!confirm("确认删除？")) return;
 		$.post("del.action",{id:$chok.view.get.fn.getIdSelections()},function(result){
 	        $chok.view.get.callback.delRows(result); // 删除行回调
-	        if(!result.success) return;
+	        if(!result.success) {
+	        	alert(result.msg);
+	        	return;
+	        }
 	        $("#tb_list").bootstrapTable('refresh'); // 刷新table
 		});
 	});
