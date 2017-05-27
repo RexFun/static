@@ -1,1 +1,0 @@
-$chok.view.getById = {};

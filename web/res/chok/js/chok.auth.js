@@ -6,7 +6,8 @@ $chok.auth.btn = function(menuPermitId, btnJson){
 		$.each($("[pbtnId^='pbtn_']"),function(i,o) {
 			for(var j=0; j<btnPermitArr.length; j++) {
 				if(menuPermitId==btnPermitArr[j].pid) {
-					if(($(o).attr('pbtnId')).indexOf(btnPermitArr[j].tc_code) == -1) {
+					if($(o).attr('pbtnId')!=btnPermitArr[j].tc_code) {
+//						if(($(o).attr('pbtnId')).indexOf(btnPermitArr[j].tc_code) == -1) {
 						$(o).css({"display":"none"});
 					}else{
 						$(o).css({"display":""});
