@@ -136,33 +136,33 @@ $chok.view.query.init.table = function(pageNum, pageSize){
 	if(pageSize != null && pageSize != "") {$chok.view.query.config.curPageSize = parseInt(pageSize);}
 	var thisColumns = $chok.view.query.fn.getColumns();
 	$('#tb_list').bootstrapTable({
-		height:getGlobalHeight("table"),
-		contextMenu:"#tb_ctx_menu",
+		height:$chok.view.fn.getGlobalHeight("table"),
+		contextMenu: "#tb_ctx_menu",
 		contextMenuButton: '.tb_ctx_menu_btn',
-		contentType:"application/x-www-form-urlencoded",//用post，必须采用此参数
-		ajax : "ajaxRequest",//自定义ajax
-		sidePagination:"server",
-		toolbar:"#toolbar",
-        showRefresh:true,
-        showToggle:true,
-        showColumns:true,
-        showExport:true,
-		striped:true,
-		pagination:true,
-		pageList:"[5,10,20,50,100]",
-		pageNumber:$chok.view.query.config.curPageNum,
-		pageSize:$chok.view.query.config.curPageSize,
-	    queryParams:$chok.view.query.config.formParams,
-	    columns:thisColumns,
-	    onPageChange:$chok.view.query.callback.onPageChange,
-	    onLoadSuccess:$chok.view.query.callback.onLoadSuccess,
-	    onLoadError:$chok.view.query.callback.onLoadError,
-        onEditableSave:$chok.view.query.callback.onEditableSave,
-        onContextMenuItem:$chok.view.query.callback.onContextMenuItem
+		contentType: "application/x-www-form-urlencoded",//用post，必须采用此参数
+		ajax: "ajaxRequest",//自定义ajax
+		sidePagination: "server",
+		toolbar: "#toolbar",
+        showRefresh: true,
+        showToggle: true,
+        showColumns: true,
+        showExport: true,
+		striped: true,
+		pagination: true,
+		pageList: "[5,10,20,50,100]",
+		pageNumber: $chok.view.query.config.curPageNum,
+		pageSize: $chok.view.query.config.curPageSize,
+	    queryParams: $chok.view.query.config.formParams,
+	    columns: thisColumns,
+	    onPageChange: $chok.view.query.callback.onPageChange,
+	    onLoadSuccess: $chok.view.query.callback.onLoadSuccess,
+	    onLoadError: $chok.view.query.callback.onLoadError,
+        onEditableSave: $chok.view.query.callback.onEditableSave,
+        onContextMenuItem: $chok.view.query.callback.onContextMenuItem
 	});
 	//随窗口resize 改变 高度
 	$(window).resize(function () {
-		$('#tb_list').bootstrapTable('resetView', {height: getGlobalHeight("table")});
+		$('#tb_list').bootstrapTable('resetView', {height: $chok.view.fn.getGlobalHeight("table")});
 	});
 	//随导航菜单resize 改变 宽度
 	$("section[class='content']").resize(function(){

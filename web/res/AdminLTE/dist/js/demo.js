@@ -200,7 +200,7 @@
   demo_settings.append(skins_list);
 
   tab_pane.append(demo_settings);
-  $(".tab-content").append(tab_pane);
+  $("#control-sidebar-home-tab").after(tab_pane);
 
   setup();
 

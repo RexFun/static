@@ -40,5 +40,16 @@ $chok.view.fn.selectSidebarMenu = function(menuId,menuPermitId,menuName){
 //	$(".content-header ol li[class='active']").html(menuName);
 	$chok.view.fn.customize();
 };
+// 计算全局高度(表格/树)
+$chok.view.fn.getGlobalHeight = function(type) {
+	if (type=='table') {
+		var minH = 300;
+		var newH = $(window).height() - 373;
+	   	return newH<minH?minH:newH;
+	}
+	else if (type=='tree') {
+		return $(window).height() - 35;
+	}
+};
 // 用户自定义
 $chok.view.fn.customize = function(){};
