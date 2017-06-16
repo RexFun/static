@@ -9,6 +9,8 @@ $chok.view.query.config.setPreFormParams = function(){};//保留上次表单参�
 $chok.view.query.config.formParams = function(p){return p;};//配置表单参数
 $chok.view.query.config.urlParams = function(){return {};};//配置url表单参数
 $chok.view.query.config.tableColumns = [];//配置表格列//配置行菜单
+$chok.view.query.config.showMultiSort = false;// 是否显示多列排序
+$chok.view.query.config.sortPriority = [{"sortName":"m.id","sortOrder":"desc"}];
 $chok.view.query.config.operateFormatter = function(value, row, index){
     return [
 	        "<div class='btn-group btn-group-xs'>",
@@ -147,6 +149,8 @@ $chok.view.query.init.table = function(pageNum, pageSize){
         showToggle: true,
         showColumns: true,
         showExport: true,
+        showMultiSort: $chok.view.query.config.showMultiSort,
+        sortPriority: $chok.view.query.config.sortPriority,
 		striped: true,
 		pagination: true,
 		pageList: "[5,10,20,50,100]",
