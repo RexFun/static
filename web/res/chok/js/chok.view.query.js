@@ -208,3 +208,20 @@ $chok.view.query.fn.getUrlParams = function(){
 	paramsStr = paramsStr.substr(0,paramsStr.length-1);//去除最后一个&号
 	return paramsStr;
 };
+// 导出
+$chok.view.query.fn.exp = function(url, fileName, title, columnNames, columnKeys){
+	var params = $chok.view.query.config.urlParams();
+	$("body").append("<form id=\"expForm\"></form>");  
+    $("body").find("form[id='expForm']").attr("action", url);  
+    $("body").find("form[id='expForm']").attr("method", "post");  
+    $("body").find("form[id='expForm']").attr("style", "display:none");  
+    $.each(params, function (k, v) {
+    	k = k.replace("f_","");
+        $("body").find("form[id='expForm']").append("<input type='text' name='" + k + "' value = '" + v + "'></input>");
+    });
+    $("body").find("form[id='expForm']").append("<input type='text' name='fileName' value = '" + fileName + "'></input>");
+    $("body").find("form[id='expForm']").append("<input type='text' name='title' value = '" + title + "'></input>");
+    $("body").find("form[id='expForm']").append("<input type='text' name='columnNames' value = '" + columnNames + "'></input>");
+    $("body").find("form[id='expForm']").append("<input type='text' name='columnKeys' value = '" + columnKeys + "'></input>");
+    $("body").find("form[id='expForm']").submit();  
+};
