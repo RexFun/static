@@ -209,7 +209,7 @@ $chok.view.query.fn.getUrlParams = function(){
 	return paramsStr;
 };
 // 导出
-$chok.view.query.fn.exp = function(url, fileName, title, columnNames, columnKeys){
+$chok.view.query.fn.exp = function(url, fileName, title, headerNames, dataColumns){
 	var params = $chok.view.query.config.urlParams();
 	$("body").append("<form id=\"expForm\"></form>");  
     $("body").find("form[id='expForm']").attr("action", url);  
@@ -221,7 +221,7 @@ $chok.view.query.fn.exp = function(url, fileName, title, columnNames, columnKeys
     });
     $("body").find("form[id='expForm']").append("<input type='text' name='fileName' value = '" + fileName + "'></input>");
     $("body").find("form[id='expForm']").append("<input type='text' name='title' value = '" + title + "'></input>");
-    $("body").find("form[id='expForm']").append("<input type='text' name='columnNames' value = '" + columnNames + "'></input>");
-    $("body").find("form[id='expForm']").append("<input type='text' name='columnKeys' value = '" + columnKeys + "'></input>");
+    $("body").find("form[id='expForm']").append("<input type='text' name='headerNames' value = '" + headerNames + "'></input>");
+    $("body").find("form[id='expForm']").append("<input type='text' name='dataColumns' value = '" + dataColumns + "'></input>");
     $("body").find("form[id='expForm']").submit();  
 };
