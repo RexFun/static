@@ -3,27 +3,27 @@
 	function ListSelectModal($el, cfg) {
     	// 默认设置
     	var def = {
-    		id : "",
-    		title : "列表选择器",
-    	    url : "",
-    	    fk : null,
-    	    cascadeid : null,
-    	    check : true,
-    	    multi : true,
-    	    rowType : "map", // object | map
-    	    queryParams : function(p){return p;},
-    	    columns : [
-					    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
-					    {title:'名称', field:'m.name', align:'center', valign:'middle', sortable:false}
-					  ],
-    	    pageList : "[10,20,50,100]",
-    	    pageNumber : 1,
-    	    pageSize : 10,
-    	    callback : {
-		    	    	onLoadSuccess : function(){},
-		        	    onLoadError	  : function(status){},
-		        	    onConfirm     : function(data){}
-    				   }
+    		id: "",
+    		title: "列表选择器",
+    	    url: "",
+//    	    fk: null,
+//    	    cascadeid: null,
+    	    check: true,
+    	    multi: true,
+    	    rowType: "map", // object | map
+    	    queryParams: function(p){return p;},
+    	    columns: [
+					   {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
+					   {title:'名称', field:'m.name', align:'center', valign:'middle', sortable:false}
+					 ],
+    	    pageList: "[10,20,50,100]",
+    	    pageNumber: 1,
+    	    pageSize: 10,
+    	    callback: {
+		    	    	onLoadSuccess: function(){},
+		        	    onLoadError: function(status){},
+		        	    onConfirm: function(data){}
+    				  }
         };
     	// 覆盖设置
         var opt = $.extend(def, cfg);
@@ -137,24 +137,41 @@
     	}
     	$.merge(columns, cfg.columns);
 		$('#tb_'+cfg.id).bootstrapTable({
-			height			: 300,
-			contentType		: "application/x-www-form-urlencoded",//用post，必须采用此参数
-			url				: cfg.url,
-			sidePagination	: "server",
-			toolbar			: "#toolbar_"+cfg.id,
-			search			: true,
-	        showRefresh		: true,
-	        showToggle		: true,
-	        showColumns		: true,
-			striped			: true,
-			pagination		: true,
-			pageList		: cfg.pageList,
-			pageNumber		: cfg.pageNumber,
-			pageSize		: cfg.pageSize,
-    		queryParams		: cfg.queryParams,
-		    columns	        : columns,
-		    onLoadSuccess   : cfg.callback.onLoadSuccess,
-		    onLoadError     : cfg.callback.onLoadError
+			ajax: function(params) {
+				$.ajax({
+					type: 'post',
+					url: cfg.url,
+					data: params.data,
+					success: function(result){
+						if(result.success==false){
+							alert(result.msg);
+							return;
+						}
+						//表格加载数据
+						params.success({
+							total: result.total,
+							rows: result.rows
+						});
+					}
+				});
+			},
+			contentType: "application/x-www-form-urlencoded",//用post，必须采用此参数
+			height: 300,
+			sidePagination: "server",
+			toolbar: "#toolbar_"+cfg.id,
+			search: true,
+	        showRefresh: true,
+	        showToggle: true,
+	        showColumns: true,
+			striped: true,
+			pagination: true,
+			pageList: cfg.pageList,
+			pageNumber: cfg.pageNumber,
+			pageSize: cfg.pageSize,
+    		queryParams: cfg.queryParams,
+		    columns: columns,
+		    onLoadSuccess: cfg.callback.onLoadSuccess,
+		    onLoadError: cfg.callback.onLoadError
 		});
     }
 })(jQuery);
