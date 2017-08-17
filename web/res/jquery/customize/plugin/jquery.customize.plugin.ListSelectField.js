@@ -74,9 +74,9 @@
         // 初始化弹窗
         var win = PrivateFn.initListSelectModal($el, win_cfg);
         // 附加隐藏域以存储表单值
-        $el.after("<input type=\"hidden\" id=\"f_"+$el.attr("id")+"\" name=\"f_"+$el.attr("id")+"\" value=\"\" />");
+        $el.after("<input type=\"text\" id=\"f_"+$el.attr("id")+"\" name=\"f_"+$el.attr("id")+"\" value=\"\" style=\"display:none\"/>");
         // 获取焦点时显示
-    	$el.focus(function(){
+    	$el.attr({"readonly":true}).css({"background-color":"white"}).focus(function(){
     		win.reload();
     		win.show();
     	});
