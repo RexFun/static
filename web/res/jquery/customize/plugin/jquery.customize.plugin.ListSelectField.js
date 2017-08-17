@@ -84,7 +84,6 @@
 		this.getSelections = function(resultKey) {return PublicFn.getSelections(win, resultKey);};
 		//===================================================//
 	}
-
     
     /******************************************** 
      * Public 方法集定义
@@ -97,6 +96,7 @@
     		return win.getSelections(resultKey);
     	}
     };
+    
     /******************************************** 
      * Private 方法集定义
      * ******************************************/
