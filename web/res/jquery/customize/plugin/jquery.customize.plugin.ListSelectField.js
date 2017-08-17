@@ -1,5 +1,14 @@
 (function($){
-	/* 定义列表选择框 */
+    /******************************************** 
+     * JQuery 实例化
+     * ******************************************/
+    $.fn.ListSelectField = function(cfg) {
+    	return new ListSelectField($(this), cfg);
+    };
+    
+    /******************************************** 
+     * 定义类
+     * ******************************************/
 	function ListSelectField($el, cfg) {
 		// 返回值
 		var result = [];
@@ -10,24 +19,19 @@
     		id: "",
     		title: "列表选择器",
     	    url: "",
-//    	    fk: null,
-//    	    cascadeid: null,
     	    check: true,
     	    multi: true,
     	    rowType: "map", // object | map
-    	    resultKey: "obj",
     	    queryParams: function(p) {return p;},
-    	    columns: 
-    	    [
-			    {title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
-			    {title:'名称', field:'m.name', align:'center', valign:'middle', sortable:false}
-			],
     	    pageList: "[10,20,50,100]",
     	    pageNumber: 1,
     	    pageSize: 10,
+    	    columns: [
+    	    	{title:'ID', field:'m.id', align:'center', valign:'middle', sortable:false},
+    	    	{title:'名称', field:'m.name', align:'center', valign:'middle', sortable:false}
+    	    ],
     	    callback: {
-    	    	onConfirm: function(data) {
-    	    	}
+    	    	onConfirm: function(data) {}
     	    }
 		};
 		// 覆盖设置
@@ -38,11 +42,10 @@
     		id: opt.id,
     		title: opt.title,
     	    url: opt.url,
-//    	    fk: opt.fk,
-//    	    cascadeid: opt.cascadeid,
     	    check: opt.check,
     	    multi: opt.multi,
     	    rowType: opt.rowType,
+    	    resultKey: opt.resultKey,
     	    queryParams: opt.queryParams,
     	    columns: opt.columns,
     	    pageList: opt.pageList,
@@ -69,8 +72,7 @@
     	    }
         };
         // 初始化弹窗
-        var win = initListSelectModal($el, win_cfg);
-        
+        var win = PrivateFn.initListSelectModal($el, win_cfg);
         // 附加隐藏域以存储表单值
         $el.after("<input type=\"hidden\" id=\"f_"+$el.attr("id")+"\" name=\"f_"+$el.attr("id")+"\" value=\"\" />");
         // 获取焦点时显示
@@ -78,33 +80,32 @@
     		win.reload();
     		win.show();
     	});
-    	
-    	/******************************************** 
-    	 * Public Fn
-    	 * ******************************************/
-		this.getSelections = function(resultKey) {
-			var val = [];
-			if (resultKey == "obj" || resultKey==null) {
-				val = result;
-			} else {
-				$.each(result, function(k, v) {
-					val.push(v[resultKey]);
-				});
-			}
-			return val;
-		};
+    	//== 开放外部接口 =====================================//
+		this.getSelections = function(resultKey) {return PublicFn.getSelections(win, resultKey);};
+		//===================================================//
 	}
-	
-    /* 实例化 */
-    $.fn.ListSelectField = function(cfg) {
-    	return new ListSelectField($(this), cfg);
-    };
+
     
     /******************************************** 
-     * Private Fn
-     * 画窗口<option></option>
+     * Public 方法集定义
      * ******************************************/
-    function initListSelectModal($el, cfg) {
-    	return $el.ListSelectModal(cfg);
-    }
+    var PublicFn = {
+    	/**
+    	 * getSelections
+    	 */
+    	getSelections: function(win, resultKey) {
+    		return win.getSelections(resultKey);
+    	}
+    };
+    /******************************************** 
+     * Private 方法集定义
+     * ******************************************/
+    var PrivateFn = {
+    	/**
+    	 * initListSelectModal
+    	 */
+    	initListSelectModal: function($el, cfg) {
+    		return $el.ListSelectModal(cfg);
+    	}
+    };
 })(jQuery);
