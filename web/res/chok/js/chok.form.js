@@ -28,7 +28,7 @@ $(function(){
 		$.LoadingOverlay("show");
 		if(!$chok.validator.check()) {
     			$.LoadingOverlay("hide");
-			alert("表单信息不完整！");
+			$.alert({title: "提示", type: "red", content: "表单信息不完整！"});
 			return;
 		}
         var options = {
@@ -39,7 +39,7 @@ $(function(){
             enctype: $("#dataForm").attr("enctype"),
             success: function (data) {
         			$.LoadingOverlay("hide");
-            		alert($chok.checkResult(data));
+        			$.alert({title: "提示", content: $chok.checkResult(data)});
                 $chok.form.callback();
             }
         };
@@ -59,7 +59,7 @@ $(function(){
             data: $("#form_del").serialize(),
             success: function (data) {
         			$.LoadingOverlay("hide");
-            		alert($chok.checkResult(data));
+        			$.alert({title: "提示", content: $chok.checkResult(data)});
                 $chok.form.callback();
             }
         };

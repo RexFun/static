@@ -50,13 +50,13 @@ $chok.view.query.callback.onEditableSave = function(field, row, oldValue, $el){
         dataType: 'JSON',
         success: function (data, status) {
             if (status=="success") {
-                alert($chok.checkResult(data));
-                $("#tb_list").bootstrapTable('refresh'); // 刷新table
+            		$.alert({title: "提示", content: $chok.checkResult(data)});
+        			$("#tb_list").bootstrapTable('refresh'); // 刷新table
             }
         },
         error: function (jqXHR, textStatus, errorThrown) {
             /*弹出jqXHR对象的信息*/
-            alert($chok.checkResult(jqXHR.responseText));
+			$.alert({title: "提示", content: $chok.checkResult(jqXHR.responseText)});
 //            alert(jqXHR.status);
 //            alert(jqXHR.readyState);
 //            alert(jqXHR.statusText);
@@ -97,17 +97,28 @@ $chok.view.query.init.toolbar = function(){
 	});
 	$("#bar_btn_del").click(function(){
 		if($chok.view.query.fn.getIdSelections().length<1) {
-			alert("没选择");
+			$.alert({title: "提示", type: "red", content: "没选择"});
 			return;
 		}
-		if(!confirm("确认删除？")) return;
-		$.post("del.action",{id:$chok.view.query.fn.getIdSelections()},function(result){
-	        $chok.view.query.callback.delRows(result); // 删除行回调
-	        if(!result.success) {
-	        	alert(result.msg);
-	        	return;
-	        }
-	        $("#tb_list").bootstrapTable('refresh'); // 刷新table
+		$.confirm({
+		    title: "提示",
+		    content: "确认删除？",
+		    type: "red",
+		    typeAnimated: true,
+		    buttons: {
+		        ok: function() {
+			    		$.post("del.action",{id:$chok.view.query.fn.getIdSelections()},function(result){
+			    	        $chok.view.query.callback.delRows(result); // 删除行回调
+			    	        if(!result.success) {
+				    	        	$.alert({title: "提示", content: result.msg});
+				    	        	return;
+			    	        }
+			    	        $("#tb_list").bootstrapTable('refresh'); // 刷新table
+			    		});
+		        },
+		        close: function () {
+		        }
+		    }
 		});
 	});
 };
@@ -124,7 +135,7 @@ function ajaxRequest(params){
         success : function(result){
         		$.LoadingOverlay("hide");
 	        	if(result.success==false){
-	        		alert(result.msg);
+	        		$.alert({title: "提示", content: result.msg});
 	        		return;
 	        	}
 	        //表格加载数据
