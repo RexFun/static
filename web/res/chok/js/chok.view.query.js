@@ -114,6 +114,7 @@ $chok.view.query.init.toolbar = function(){
 /* 初始化数据表 */
 //自定义ajax
 function ajaxRequest(params){
+	$.LoadingOverlay("show");
     //访问服务器获取所需要的数据
     //比如使用$.ajax获得请求某个url获得数据
     $.ajax({
@@ -121,15 +122,16 @@ function ajaxRequest(params){
         url : 'query2.action',
         data : params.data,
         success : function(result){
-        	if(result.success==false){
-        		alert(result.msg);
-        		return;
-        	}
-            //表格加载数据
-            params.success({
-                total : result.total,
-                rows : result.rows
-            });
+        		$.LoadingOverlay("hide");
+	        	if(result.success==false){
+	        		alert(result.msg);
+	        		return;
+	        	}
+	        //表格加载数据
+	        params.success({
+	            total : result.total,
+	            rows : result.rows
+	        });
         }
     });
 }
