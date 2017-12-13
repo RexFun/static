@@ -69,9 +69,9 @@ $chok.view.query.callback.onEditableSave = function(field, row, oldValue, $el){
 //右键菜单点击事件 
 $chok.view.query.callback.onContextMenuItem = function(row, $el){
 	if ($el.data("item")=="upd"){
-		location.href = "upd.action?id="+row.m.id+"&"+$chok.view.query.fn.getUrlParams();
+		location.href = "upd.action?id="+row.id+"&"+$chok.view.query.fn.getUrlParams();
 	} else if ($el.data("item")=="get"){
-		location.href = "get.action?id="+row.m.id+"&"+$chok.view.query.fn.getUrlParams();
+		location.href = "get.action?id="+row.id+"&"+$chok.view.query.fn.getUrlParams();
 	}
 };
 /* **************************************************************************************************************
@@ -194,7 +194,7 @@ $chok.view.query.fn = {};
 // 获取已选行的ID集合
 $chok.view.query.fn.getIdSelections = function(){
     return $.map($("#tb_list").bootstrapTable('getSelections'), function (row) {
-        return row.m.id
+        return row.id
     });
 };
 // 获取表格列
@@ -229,7 +229,7 @@ $chok.view.query.fn.exp = function(url, fileName, title, headerNames, dataColumn
     $("body").find("form[id='expForm']").attr("method", "post");  
     $("body").find("form[id='expForm']").attr("style", "display:none");  
     $.each(params, function (k, v) {
-    		k = k.replace("f_","");
+    	k = k.replace("f_","");
         $("body").find("form[id='expForm']").append("<input type='text' name='" + k + "' value = '" + v + "'></input>");
     });
     $("body").find("form[id='expForm']").append("<input type='text' name='fileName' value = '" + fileName + "'></input>");
