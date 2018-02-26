@@ -143,7 +143,11 @@ function ajaxRequest(params){
 	            total : result.total,
 	            rows : result.rows
 	        });
-        }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+    		$.LoadingOverlay("hide");
+    		$.alert({title: "提示", content: XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText});
+        }  
     });
 }
 $chok.view.query.init.table = function(pageNum, pageSize){

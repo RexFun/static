@@ -143,7 +143,11 @@ function ajaxRequest(params){
 	            total : result.total,
 	            rows : result.rows
 	        });
-        }
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown){
+    		$.LoadingOverlay("hide");
+    		$.alert({title: "提示", content: XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText});
+        } 
     });
 }
 $chok.view.query.init.table = function(pageNum, pageSize){
@@ -229,7 +233,7 @@ $chok.view.query.fn.exp = function(url, fileName, title, headerNames, dataColumn
     $("body").find("form[id='expForm']").attr("method", "post");  
     $("body").find("form[id='expForm']").attr("style", "display:none");  
     $.each(params, function (k, v) {
-    		k = k.replace("f_","");
+    	k = k.replace("f_","");
         $("body").find("form[id='expForm']").append("<input type='text' name='" + k + "' value = '" + v + "'></input>");
     });
     $("body").find("form[id='expForm']").append("<input type='text' name='fileName' value = '" + fileName + "'></input>");

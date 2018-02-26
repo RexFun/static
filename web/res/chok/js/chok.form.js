@@ -27,7 +27,7 @@ $(function(){
 	$("#dataFormSave").click(function () {
 		$.LoadingOverlay("show");
 		if(!$chok.validator.check()) {
-    			$.LoadingOverlay("hide");
+    		$.LoadingOverlay("hide");
 			$.alert({title: "提示", type: "red", content: "表单信息不完整！"});
 			return;
 		}
@@ -38,10 +38,14 @@ $(function(){
             data: $("#dataForm").serialize(),
             enctype: $("#dataForm").attr("enctype"),
             success: function (data) {
-        			$.LoadingOverlay("hide");
-        			$.alert({title: "提示", content: $chok.checkResult(data)});
+    			$.LoadingOverlay("hide");
+    			$.alert({title: "提示", content: $chok.checkResult(data)});
                 $chok.form.callback();
-            }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+        		$.LoadingOverlay("hide");
+        		$.alert({title: "提示", content: XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText});
+            } 
         };
         $("#dataForm").ajaxSubmit(options);
         return false;
@@ -58,10 +62,14 @@ $(function(){
             dataType: 'text',
             data: $("#form_del").serialize(),
             success: function (data) {
-        			$.LoadingOverlay("hide");
-        			$.alert({title: "提示", content: $chok.checkResult(data)});
+    			$.LoadingOverlay("hide");
+    			$.alert({title: "提示", content: $chok.checkResult(data)});
                 $chok.form.callback();
-            }
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown){
+        		$.LoadingOverlay("hide");
+        		$.alert({title: "提示", content: XMLHttpRequest.readyState + XMLHttpRequest.status + XMLHttpRequest.responseText});
+            } 
         };
         $.ajax(options);
         return false;
