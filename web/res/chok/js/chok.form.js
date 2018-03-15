@@ -3,17 +3,24 @@ $chok.form.callback = function(){};
 $chok.result = {type:"", msg:""};
 $chok.checkResult = function(responseText){
 	$chok.result = {type:"", msg:""};
-	try{
-		var _msg = "", _arr = (responseText + "").split(":");
-		if(_arr.length > 1){_msg = _arr[1];}
-		else{switch(_arr[0]){
-			case "0": _msg = "操作失败！";break;
-			case "1": _msg = "操作成功！";break;
-			default: _msg = (!isNaN(_arr[0]))?"":_arr[0];
-		}}
-		$chok.result = {type:_arr[0], msg:_msg};
+	if (typeof responseText =="object") { // 返回值为json格式
+		$chok.result = {type:"", msg:responseText.msg};
+	} else { // 返回值非json格式
+		try {
+			var _msg = "", _arr = (responseText + "").split(":");
+			if (_arr.length > 1) {
+				_msg = _arr[1];
+			} else { 
+				switch(_arr[0]) {
+					case "0": _msg = "操作失败！";break;
+					case "1": _msg = "操作成功！";break;
+					default: _msg = (!isNaN(_arr[0]))?"":_arr[0];
+				}
+			}
+			$chok.result = {type:_arr[0], msg:_msg};
+		}
+		catch(e){$chok.result = {type:"", msg:""};}
 	}
-	catch(e){$chok.result = {type:"", msg:""};}
 	return $chok.result.msg;
 };
 $(function(){
@@ -34,7 +41,7 @@ $(function(){
         var options = {
             url: $("#dataForm").attr("action"),
             type: 'post',
-            dataType: 'text',
+//            dataType: 'text',
             data: $("#dataForm").serialize(),
             enctype: $("#dataForm").attr("enctype"),
             success: function (data) {
@@ -59,7 +66,7 @@ $(function(){
         var options = {
             url: $("#form_del").attr("action"),
             type: 'post',
-            dataType: 'text',
+//            dataType: 'text',
             data: $("#form_del").serialize(),
             success: function (data) {
     			$.LoadingOverlay("hide");
