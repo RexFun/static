@@ -45,7 +45,7 @@ $chok.view.query.callback.onEditableSave = function(field, row, oldValue, $el){
 	row.m[key] = row[field];
     $.ajax({
         type: "post",
-        url: "upd2.action",
+        url: "upd2",
         data: row,
         dataType: 'JSON',
         success: function (data, status) {
@@ -69,9 +69,9 @@ $chok.view.query.callback.onEditableSave = function(field, row, oldValue, $el){
 //右键菜单点击事件 
 $chok.view.query.callback.onContextMenuItem = function(row, $el){
 	if ($el.data("item")=="upd"){
-		location.href = "upd.action?id="+row.m.id+"&"+$chok.view.query.fn.getUrlParams();
+		location.href = "upd?id="+row.m.id+"&"+$chok.view.query.fn.getUrlParams();
 	} else if ($el.data("item")=="get"){
-		location.href = "get.action?id="+row.m.id+"&"+$chok.view.query.fn.getUrlParams();
+		location.href = "get?id="+row.m.id+"&"+$chok.view.query.fn.getUrlParams();
 	}
 };
 /* **************************************************************************************************************
@@ -93,7 +93,7 @@ $chok.view.query.init.modalFormQuery = function(){
 /* 初始化工具栏 */
 $chok.view.query.init.toolbar = function(){
 	$("#bar_btn_add").click(function(){
-		location.href = "add.action?"+$chok.view.query.fn.getUrlParams();
+		location.href = "add?"+$chok.view.query.fn.getUrlParams();
 	});
 	$("#bar_btn_del").click(function(){
 		if($chok.view.query.fn.getIdSelections().length<1) {
@@ -107,7 +107,7 @@ $chok.view.query.init.toolbar = function(){
 		    typeAnimated: true,
 		    buttons: {
 		        ok: function() {
-			    		$.post("del.action",{id:$chok.view.query.fn.getIdSelections()},function(result){
+			    		$.post("del",{id:$chok.view.query.fn.getIdSelections()},function(result){
 			    	        $chok.view.query.callback.delRows(result); // 删除行回调
 			    	        if(!result.success) {
 				    	        	$.alert({title: "提示", content: result.msg});
@@ -130,7 +130,7 @@ function ajaxRequest(params){
     //比如使用$.ajax获得请求某个url获得数据
     $.ajax({
         type : 'post',
-        url : 'query2.action',
+        url : 'query2',
         data : params.data,
         success : function(result){
         		$.LoadingOverlay("hide");
